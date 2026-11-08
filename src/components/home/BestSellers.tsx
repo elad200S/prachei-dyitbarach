@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { products } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 
@@ -12,6 +13,7 @@ export default function BestSellers() {
     <section className="py-16 md:py-24 bg-black/[0.02]">
       <div className="text-center mb-10 px-4">
         <h2 className="font-serif text-3xl sm:text-4xl text-ink">הנמכרים ביותר</h2>
+        <p className="text-ink/60 mt-2">הזמנה מהירה עד 90 דקות · רק באזור חולון</p>
       </div>
 
       <div className="mx-auto max-w-5xl px-4">
@@ -28,6 +30,12 @@ export default function BestSellers() {
             </motion.div>
           ))}
         </div>
+      </div>
+
+      <div className="text-center mt-10">
+        <Link href="/best-sellers" className="text-sm text-accent hover:underline">
+          לכל המוצרים הנמכרים ולהזמנה מהירה
+        </Link>
       </div>
     </section>
   );

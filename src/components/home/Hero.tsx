@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, Pause, Play } from "lucide-react";
+import { CalendarDays, Pause, Play, Zap } from "lucide-react";
 
 const slides = [
   {
@@ -89,6 +89,18 @@ export default function Hero() {
           </div>
         ))}
         <div className="absolute inset-0 bg-gradient-to-l from-black/55 via-black/15 to-transparent" />
+
+        <Link
+          href="/best-sellers"
+          className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-1 bg-accent text-white rounded-2xl px-3 py-4 sm:px-5 sm:py-6 shadow-xl hover:brightness-110 transition-all text-center w-[88px] sm:w-[120px]"
+        >
+          <Zap size={20} className="shrink-0" />
+          <span className="text-xs sm:text-sm font-semibold leading-tight">הזמנה מהירה</span>
+          <span className="text-[10px] sm:text-xs text-white/85 leading-tight">עד 90 דקות</span>
+          <span className="text-[8px] sm:text-[10px] bg-white/20 rounded-full px-2 py-0.5 mt-1 whitespace-nowrap">
+            רק בחולון
+          </span>
+        </Link>
 
         <div className="relative z-10 h-full flex flex-col justify-center max-w-7xl mx-auto px-6 sm:px-10">
           <div className="max-w-md text-white">
