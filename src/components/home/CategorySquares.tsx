@@ -11,9 +11,8 @@ export default function CategorySquares() {
         <h2 className="font-serif text-2xl sm:text-3xl text-ink">קנייה לפי סוג פרח</h2>
       </div>
 
-      <div className="group relative overflow-hidden">
+      <div dir="ltr" className="group relative overflow-hidden">
         <div
-          dir="ltr"
           className="flex w-max animate-marquee group-hover:[animation-play-state:paused]"
           style={{ animationDuration: "40s" }}
         >

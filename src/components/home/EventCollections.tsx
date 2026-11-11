@@ -11,9 +11,8 @@ export default function EventCollections() {
         <h2 className="font-serif text-2xl sm:text-3xl text-ink">קנייה לפי אירוע</h2>
       </div>
 
-      <div className="group relative overflow-hidden">
+      <div dir="ltr" className="group relative overflow-hidden">
         <div
-          dir="ltr"
           className="flex w-max animate-marquee group-hover:[animation-play-state:paused]"
           style={{ animationDuration: "32s" }}
         >
