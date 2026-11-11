@@ -14,14 +14,14 @@ export default function EventCollections() {
       <div className="group relative overflow-hidden">
         <div
           dir="ltr"
-          className="flex gap-6 w-max animate-marquee group-hover:[animation-play-state:paused]"
+          className="flex w-max animate-marquee group-hover:[animation-play-state:paused]"
           style={{ animationDuration: "32s" }}
         >
           {items.map((event, i) => (
             <Link
               key={`${event.slug}-${i}`}
               href={`/event/${event.slug}`}
-              className="group/item shrink-0 w-44 sm:w-56 flex flex-col items-center gap-3"
+              className="group/item shrink-0 w-44 sm:w-56 ms-6 flex flex-col items-center gap-3"
             >
               <div className="relative w-full aspect-square overflow-hidden rounded-xl">
                 <Image
