@@ -18,6 +18,10 @@ export const categories: Category[] = [
   { slug: "sunflowers", title: "חמניות", image: "/products/sunflowers-wholesale-bulk.jpeg" },
   { slug: "peonies", title: "פיוניות", image: "/products/pink-lisianthus-bouquet.jpeg" },
   { slug: "orchids", title: "סחלבים", image: img("1610397648930-477b8c7f0943") },
+  { slug: "gerbera", title: "גרברה", image: "/products/mixed-gerbera-handheld.jpeg" },
+  { slug: "lily", title: "לילי", image: "/products/white-lily-buds.jpeg" },
+  { slug: "carnation", title: "ציפורן", image: img("1617265178200-facb3f9d8f37") },
+  { slug: "hydrangea", title: "הידרנגיה", image: img("1447875569765-2b3db822bec9") },
 ];
 
 export const services: Service[] = [

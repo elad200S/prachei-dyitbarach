@@ -45,6 +45,25 @@ html.lenis body {
   scrollbar-width: none;
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
 .input {
   width: 100%;
   border: 1px solid #d9d9d9;
