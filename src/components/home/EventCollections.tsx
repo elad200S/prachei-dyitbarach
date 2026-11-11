@@ -13,6 +13,7 @@ export default function EventCollections() {
 
       <div className="group relative overflow-hidden">
         <div
+          dir="ltr"
           className="flex gap-6 w-max animate-marquee group-hover:[animation-play-state:paused]"
           style={{ animationDuration: "32s" }}
         >
