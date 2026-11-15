@@ -1,23 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type TouchEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, Pause, Play, Zap } from "lucide-react";
 
 const slides = [
   {
-    image: "/hero/rotator/promo-20-off.png",
+    image: "/hero/rotator/promo-20-off.webp",
     alt: "מבצע זר שני ב-20% הנחה",
     href: "/shop",
   },
   {
-    image: "/hero/rotator/friday-delivery.png",
+    image: "/hero/rotator/friday-delivery.webp",
     alt: "משלוחים בשישי בחולון בתוך שעה",
     href: "/delivery",
   },
   {
-    image: "/hero/rotator/combo-offers.png",
+    image: "/hero/rotator/combo-offers.webp",
     alt: "מבצעים שיגרמו לכם לחייך",
     href: "/shop",
   },
@@ -29,6 +29,37 @@ export default function Hero() {
   const [userPaused, setUserPaused] = useState(false);
   const [hovering, setHovering] = useState(false);
   const paused = autoPaused || userPaused || hovering;
+  const touchStartX = useRef(0);
+  const swiped = useRef(false);
+  const SWIPE_THRESHOLD = 50;
+
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    swiped.current = false;
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (Math.abs(e.touches[0].clientX - touchStartX.current) > 10) {
+      swiped.current = true;
+    }
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+      if (deltaX < 0) {
+        setIndex((i) => (i + 1) % slides.length);
+      } else {
+        setIndex((i) => (i - 1 + slides.length) % slides.length);
+      }
+    }
+  };
+
+  const handleSlideClick = (e: MouseEvent) => {
+    if (swiped.current) {
+      e.preventDefault();
+    }
+  };
 
   // WCAG 2.2.2 (Pause, Stop, Hide): auto-advancing content needs a way to
   // stop it. We honor the OS-level reduced-motion preference, our own
@@ -56,10 +87,14 @@ export default function Hero() {
     <section className="relative w-full">
       <div
         className="relative w-full aspect-[1886/834] max-h-[85vh] overflow-hidden"
+        style={{ touchAction: "pan-y" }}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         onFocus={() => setHovering(true)}
         onBlur={() => setHovering(false)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {slides.map((s, i) => (
           <Link
@@ -67,6 +102,7 @@ export default function Hero() {
             href={s.href}
             aria-hidden={i !== index}
             tabIndex={i === index ? 0 : -1}
+            onClick={handleSlideClick}
             className="absolute inset-0 transition-opacity duration-700"
             style={{ opacity: i === index ? 1 : 0, pointerEvents: i === index ? "auto" : "none" }}
           >
