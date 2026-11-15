@@ -55,7 +55,7 @@ export default function Hero() {
   return (
     <section className="relative w-full">
       <div
-        className="relative h-[52vh] md:h-[68vh] w-full overflow-hidden"
+        className="relative w-full aspect-[1916/821] max-h-[70vh] overflow-hidden"
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         onFocus={() => setHovering(true)}
@@ -93,7 +93,7 @@ export default function Hero() {
           </span>
         </Link>
 
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
+        <div className="absolute bottom-3 sm:bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
           <div className="flex items-center gap-2">
             {slides.map((s, i) => (
               <button
