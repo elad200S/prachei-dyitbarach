@@ -7,28 +7,19 @@ import { CalendarDays, Pause, Play, Zap } from "lucide-react";
 
 const slides = [
   {
-    image: "/hero/rotator/mid-pink.png",
-    alt: "זר פרחים מעוצב",
-    eyebrow: "משלוח עד הבית · באותו היום",
-    title: "זרים בעיצוב אישי\nלכל אירוע ורגע",
-    text: "פרחים טריים, עיצוב בוטיק ושירות אישי — פרחי ד׳ יתברך, חולון והסביבה.",
-    cta: { label: "לקטלוג המוצרים", href: "/shop" },
+    image: "/hero/rotator/promo-20-off.png",
+    alt: "מבצע זר שני ב-20% הנחה",
+    href: "/shop",
   },
   {
-    image: "/products/luxury-red-pink-roses.jpeg",
-    alt: "זר ורדים אדומים וורודים",
-    eyebrow: "טרי כל יום",
-    title: "משלוח באותו היום\nבחולון והסביבה",
-    text: "הזמינו עד השעה 14:00 ונדאג שהזר יגיע טרי ומושלם עוד היום.",
-    cta: { label: "להזמנה", href: "/delivery" },
+    image: "/hero/rotator/friday-delivery.png",
+    alt: "משלוחים בשישי בחולון בתוך שעה",
+    href: "/delivery",
   },
   {
-    image: "/products/gift-set-plant-wine-chocolate.jpeg",
-    alt: "מארז מתנה עם צמח, יין ושוקולד",
-    eyebrow: "לא רק פרחים",
-    title: "מארזי מתנה\nלכל אירוע",
-    text: "שוקולד, יין, עציצים ובלונים — נבנה בשבילכם מארז שמתאים בדיוק למקבל/ת המתנה.",
-    cta: { label: "לכל המוצרים", href: "/shop/giftset" },
+    image: "/hero/rotator/combo-offers.png",
+    alt: "מבצעים שיגרמו לכם לחייך",
+    href: "/shop",
   },
 ];
 
@@ -61,8 +52,6 @@ export default function Hero() {
     return () => clearInterval(id);
   }, [paused]);
 
-  const slide = slides[index];
-
   return (
     <section className="relative w-full">
       <div
@@ -73,10 +62,13 @@ export default function Hero() {
         onBlur={() => setHovering(false)}
       >
         {slides.map((s, i) => (
-          <div
+          <Link
             key={s.image}
+            href={s.href}
+            aria-hidden={i !== index}
+            tabIndex={i === index ? 0 : -1}
             className="absolute inset-0 transition-opacity duration-700"
-            style={{ opacity: i === index ? 1 : 0 }}
+            style={{ opacity: i === index ? 1 : 0, pointerEvents: i === index ? "auto" : "none" }}
           >
             <Image
               src={s.image}
@@ -86,9 +78,8 @@ export default function Hero() {
               sizes="100vw"
               className="object-cover"
             />
-          </div>
+          </Link>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-l from-black/55 via-black/15 to-transparent" />
 
         <Link
           href="/best-sellers"
@@ -101,22 +92,6 @@ export default function Hero() {
             רק בחולון
           </span>
         </Link>
-
-        <div className="relative z-10 h-full flex flex-col justify-center max-w-7xl mx-auto px-6 sm:px-10">
-          <div className="max-w-md text-white">
-            <p className="text-[12px] tracked-xs uppercase text-white/80 mb-3">{slide.eyebrow}</p>
-            <h1 className="font-serif text-4xl sm:text-5xl leading-tight mb-4 whitespace-pre-line">
-              {slide.title}
-            </h1>
-            <p className="text-sm text-white/85 mb-7 leading-7">{slide.text}</p>
-            <Link
-              href={slide.cta.href}
-              className="inline-block bg-accent text-white text-sm font-medium px-8 py-3.5 rounded-lg hover:brightness-110 transition-all"
-            >
-              {slide.cta.label}
-            </Link>
-          </div>
-        </div>
 
         <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
           <div className="flex items-center gap-2">
