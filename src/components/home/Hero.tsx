@@ -21,6 +21,11 @@ const slides = [
     alt: "מבצעים שיגרמו לכם לחייך",
     href: "/shop",
   },
+  {
+    image: "/hero/rotator/brand-sunflowers.png",
+    alt: "זרי פרחים ומתנות בחולון",
+    href: "/shop",
+  },
 ];
 
 export default function Hero() {
