@@ -26,6 +26,16 @@ const slides = [
     alt: "זרי פרחים ומתנות בחולון",
     href: "/shop",
   },
+  {
+    image: "/hero/rotator/brand-roses-gerbera.png",
+    alt: "זר ורדים וגרברות ורודות",
+    href: "/shop",
+  },
+  {
+    image: "/hero/rotator/brand-roses-lily.png",
+    alt: "זר ורדים וחבצלות",
+    href: "/shop",
+  },
 ];
 
 export default function Hero() {
