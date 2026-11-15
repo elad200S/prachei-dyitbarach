@@ -21,21 +21,6 @@ const slides = [
     alt: "מבצעים שיגרמו לכם לחייך",
     href: "/shop",
   },
-  {
-    image: "/hero/rotator/brand-sunflowers.png",
-    alt: "זרי פרחים ומתנות בחולון",
-    href: "/shop",
-  },
-  {
-    image: "/hero/rotator/brand-roses-gerbera.png",
-    alt: "זר ורדים וגרברות ורודות",
-    href: "/shop",
-  },
-  {
-    image: "/hero/rotator/brand-roses-lily.png",
-    alt: "זר ורדים וחבצלות",
-    href: "/shop",
-  },
 ];
 
 export default function Hero() {
@@ -70,7 +55,7 @@ export default function Hero() {
   return (
     <section className="relative w-full">
       <div
-        className="relative w-full aspect-[1916/821] max-h-[70vh] overflow-hidden"
+        className="relative w-full aspect-[1886/834] max-h-[70vh] overflow-hidden"
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         onFocus={() => setHovering(true)}
