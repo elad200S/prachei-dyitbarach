@@ -55,7 +55,7 @@ export default function Hero() {
   return (
     <section className="relative w-full">
       <div
-        className="relative w-full aspect-[1886/834] max-h-[70vh] overflow-hidden"
+        className="relative w-full aspect-[1886/834] max-h-[85vh] overflow-hidden"
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         onFocus={() => setHovering(true)}
