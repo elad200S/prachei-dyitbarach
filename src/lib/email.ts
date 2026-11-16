@@ -53,7 +53,7 @@ function itemsHtml(items: OrderItem[]) {
 const ACCENT = "#7e1c2e";
 const ACCENT_SOFT = "#fadad1";
 
-function cardMessageHtml(message: string | undefined, label: string) {
+function cardMessageHtml(message: string | null | undefined, label: string) {
   if (!message) return "";
   const withBreaks = message.replace(/\n/g, "<br/>");
   return `
