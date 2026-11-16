@@ -53,6 +53,20 @@ function itemsHtml(items: OrderItem[]) {
 const ACCENT = "#7e1c2e";
 const ACCENT_SOFT = "#fadad1";
 
+function cardMessageHtml(message: string | undefined, label: string) {
+  if (!message) return "";
+  const withBreaks = message.replace(/\n/g, "<br/>");
+  return `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:18px;">
+      <tr>
+        <td style="padding:16px 18px;background:${ACCENT_SOFT};border-right:3px solid ${ACCENT};border-radius:6px;">
+          <div style="font-family: Arial, sans-serif;font-size:11px;color:${ACCENT};margin-bottom:6px;">✍️ ${label}</div>
+          <div style="font-family: Georgia, 'Times New Roman', serif;font-style:italic;font-size:15px;color:${INK};line-height:1.6;">${withBreaks}</div>
+        </td>
+      </tr>
+    </table>`;
+}
+
 function emailShell(opts: { title: string; preheader: string; body: string }) {
   const logoUrl = `${SITE_URL}/logo-icon.png`;
   return `
@@ -103,9 +117,10 @@ export async function sendOrderNotificationEmail(order: Order) {
       <tr><td style="padding:3px 0;"><strong>כתובת:</strong></td><td align="left">${order.city}, ${order.street}${order.floor ? `, ${order.floor}` : ""}</td></tr>
       <tr><td style="padding:3px 0;"><strong>תאריך משלוח:</strong></td><td align="left">${formatDate(order.delivery_date)}${order.rush_delivery ? " (מהיר)" : ""}</td></tr>
       ${order.delivery_time ? `<tr><td style="padding:3px 0;"><strong>שעת משלוח:</strong></td><td align="left">${order.delivery_time}</td></tr>` : ""}
-      ${order.card_message ? `<tr><td style="padding:3px 0;"><strong>ברכה:</strong></td><td align="left">${order.card_message}</td></tr>` : ""}
       <tr><td style="padding:3px 0;"><strong>תשלום:</strong></td><td align="left">${order.payment_method}</td></tr>
     </table>
+
+    ${cardMessageHtml(order.card_message, "הברכה לכרטיס")}
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #ececec;">
       ${itemsHtml(order.items)}
@@ -152,6 +167,8 @@ export async function sendCustomerConfirmationEmail(order: Order) {
         </td>
       </tr>
     </table>
+
+    ${cardMessageHtml(order.card_message, "הברכה שלך לכרטיס")}
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #ececec;">
       ${itemsHtml(order.items)}
