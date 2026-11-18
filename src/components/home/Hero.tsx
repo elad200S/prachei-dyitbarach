@@ -145,13 +145,13 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 flex justify-center -mt-6 px-4">
+      <div className="relative z-10 -mt-6 px-4">
         <Link
           href="/shop"
-          className="flex items-center gap-2 bg-accent text-white text-sm px-6 py-3 rounded-full shadow-lg hover:brightness-110 transition-all"
+          className="mx-auto flex max-w-2xl items-center justify-center gap-2 w-full bg-accent text-white text-sm sm:text-base font-medium py-4 rounded-xl shadow-lg hover:brightness-110 transition-all"
         >
-          <CalendarDays size={16} />
-          בחרו תאריך ואזור למשלוח
+          <CalendarDays size={18} />
+          בחרו תאריך וכתובת למשלוח
         </Link>
       </div>
     </section>

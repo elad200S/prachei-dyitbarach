@@ -12,12 +12,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Advantages />
       <RecommendedTabs />
       <BestSellers />
       <CategoryCircles />
       <CategorySquares />
       <EventCollections />
+      <Advantages />
       <Testimonials />
       <EditorialIntro />
     </>

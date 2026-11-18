@@ -22,15 +22,15 @@ export default function RecommendedTabs() {
           המומלצים שלנו
         </h2>
 
-        <div className="flex gap-2 overflow-x-auto no-scrollbar justify-start sm:justify-center mb-10 px-1">
+        <div className="flex gap-6 overflow-x-auto no-scrollbar justify-start sm:justify-center mb-10 px-1 border-b border-black/10">
           {tabs.map((tab) => (
             <button
               key={tab.slug}
               onClick={() => setActive(tab.slug)}
-              className={`shrink-0 text-sm px-4 py-2 rounded-full border transition-colors ${
+              className={`shrink-0 -mb-px border-b-2 pb-3 text-sm sm:text-base transition-colors ${
                 active === tab.slug
-                  ? "bg-accent text-white border-accent"
-                  : "bg-white text-ink/70 border-black/10 hover:border-accent"
+                  ? "border-accent text-ink font-medium"
+                  : "border-transparent text-ink/50 hover:text-ink"
               }`}
             >
               {tab.title}
