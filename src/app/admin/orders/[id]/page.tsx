@@ -75,6 +75,9 @@ export default async function AdminOrderDetailPage({
                 {item.addOns.length > 0 && (
                   <span className="text-ink/60"> · תוספות: {item.addOns.map((a) => a.label).join(", ")}</span>
                 )}
+                {item.cardMessage && (
+                  <div className="text-ink/70 text-sm mt-1">✍️ ברכה: {item.cardMessage}</div>
+                )}
               </li>
             ))}
           </ul>

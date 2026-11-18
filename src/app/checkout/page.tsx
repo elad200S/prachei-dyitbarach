@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { deliveryZones, deliveryTimeSlots, RUSH_DELIVERY_COST } from "@/lib/data";
+import DeliveryDatePicker from "@/components/checkout/DeliveryDatePicker";
 
 function CheckoutBackground() {
   return (
@@ -27,6 +28,7 @@ export default function CheckoutPage() {
   const { items, subtotal, clearCart } = useCart();
   const [payment, setPayment] = useState("bit");
   const [city, setCity] = useState(deliveryZones[0].city);
+  const [deliveryDate, setDeliveryDate] = useState("");
   const [rushDelivery, setRushDelivery] = useState(false);
   const [placed, setPlaced] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -39,6 +41,12 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+
+    if (!deliveryDate) {
+      setError("בחרו תאריך משלוח");
+      return;
+    }
+
     setSubmitting(true);
 
     const form = new FormData(e.currentTarget);
@@ -56,10 +64,9 @@ export default function CheckoutPage() {
           city,
           street: form.get("street"),
           floor: form.get("floor"),
-          deliveryDate: form.get("deliveryDate"),
+          deliveryDate,
           deliveryTime: form.get("deliveryTime"),
           rushDelivery,
-          cardMessage: form.get("cardMessage"),
           paymentMethod: paymentOptions.find((p) => p.id === payment)?.label ?? payment,
           items: items.map((item) => ({
             title: item.title,
@@ -68,6 +75,7 @@ export default function CheckoutPage() {
             quantity: item.quantity,
             basePrice: item.basePrice,
             addOns: item.addOns.map((a) => ({ label: a.label, price: a.price })),
+            cardMessage: item.cardMessage || null,
           })),
           deliveryCost: selectedZone.cost,
           total,
@@ -175,15 +183,7 @@ export default function CheckoutPage() {
         <section>
           <h2 className="font-serif text-xl text-ink mb-4">תאריך ושעת משלוח</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input
-              name="deliveryDate"
-              required
-              type="date"
-              min={today}
-              lang="he"
-              dir="rtl"
-              className="input"
-            />
+            <DeliveryDatePicker value={deliveryDate} onChange={setDeliveryDate} min={today} />
             <select name="deliveryTime" required defaultValue="" className="input">
               <option value="" disabled>
                 בחרו שעת משלוח
@@ -208,11 +208,6 @@ export default function CheckoutPage() {
             </span>
             <span className="text-sm text-ink/50">+{RUSH_DELIVERY_COST} ₪</span>
           </label>
-        </section>
-
-        <section>
-          <h2 className="font-serif text-xl text-ink mb-4">ברכה לכרטיס</h2>
-          <textarea name="cardMessage" placeholder="כתבו כאן את הברכה..." rows={3} className="input" />
         </section>
 
         <section>

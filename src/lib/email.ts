@@ -38,6 +38,7 @@ function itemsHtml(items: OrderItem[]) {
                   <div style="font-size:15px;">${item.title}</div>
                   <div style="color:#8a8a8a;font-size:12px;font-family: Arial, sans-serif;margin-top:2px;">${item.sizeLabel} · כמות ${item.quantity}</div>
                   ${addOnsLine}
+                  ${item.cardMessage ? `<div style="margin-top:8px;">${cardMessageHtml(item.cardMessage, "הברכה לכרטיס")}</div>` : ""}
                 </td>
                 <td align="left" valign="top" style="font-family: Arial, sans-serif;font-size:14px;color:${INK};white-space:nowrap;">
                   ${itemLineTotal(item)} ₪

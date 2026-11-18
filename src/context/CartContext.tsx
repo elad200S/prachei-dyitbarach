@@ -11,6 +11,7 @@ export interface CartItem {
   sizeLabel: string;
   basePrice: number;
   addOns: { id: string; label: string; price: number }[];
+  cardMessage?: string;
   quantity: number;
 }
 

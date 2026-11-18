@@ -7,6 +7,7 @@ export interface OrderItem {
   quantity: number;
   basePrice: number;
   addOns: { label: string; price: number }[];
+  cardMessage?: string | null;
 }
 
 export interface Order {
@@ -87,7 +88,7 @@ export interface NewOrder {
   deliveryDate: string;
   deliveryTime: string;
   rushDelivery: boolean;
-  cardMessage: string;
+  cardMessage?: string;
   paymentMethod: string;
   items: OrderItem[];
   deliveryCost: number;

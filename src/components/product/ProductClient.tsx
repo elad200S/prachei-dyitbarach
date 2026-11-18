@@ -43,6 +43,7 @@ export default function ProductClient({ product }: { product: Product }) {
       sizeLabel: sizeOption.label,
       basePrice: sizeOption.price,
       addOns: allAddOns.filter((a) => selectedAddOns.includes(a.id)),
+      cardMessage: selectedAddOns.includes("card") ? cardText.trim() : undefined,
       quantity: 1,
     });
     setAdded(true);
