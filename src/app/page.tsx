@@ -15,9 +15,9 @@ export default function Home() {
       <RecommendedTabs />
       <BestSellers />
       <CategoryCircles />
-      <CategorySquares />
       <EventCollections />
       <Advantages />
+      <CategorySquares />
       <Testimonials />
       <EditorialIntro />
     </>
