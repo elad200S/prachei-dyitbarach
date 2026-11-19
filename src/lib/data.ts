@@ -70,7 +70,56 @@ export const addOns: AddOn[] = [
   { id: "vase", label: "אגרטל זכוכית", price: 45 },
 ];
 
-export const products: Product[] = [];
+export const products: Product[] = [
+  {
+    slug: "red-roses-cream-wrap",
+    title: "זר ורדים אדומים בעטיפה בז'",
+    description: "פריט מהמלאי שלנו — תיאור מלא בקרוב",
+    longDescription: "פריט מהמלאי שלנו — תיאור מלא בקרוב",
+    category: "unsorted",
+    productType: "bouquet",
+    images: ["/products/red-roses-cream-wrap.jpeg"],
+    startingPrice: 189,
+    startingOriginalPrice: 399,
+    sizes: [{ size: "M", label: "רגיל", price: 189, originalPrice: 399, isDefault: true }],
+  },
+  {
+    slug: "red-roses-black-wrap",
+    title: "זר ורדים אדומים בעטיפה שחורה",
+    description: "פריט מהמלאי שלנו — תיאור מלא בקרוב",
+    longDescription: "פריט מהמלאי שלנו — תיאור מלא בקרוב",
+    category: "unsorted",
+    productType: "bouquet",
+    images: ["/products/red-roses-black-wrap.jpeg"],
+    startingPrice: 189,
+    startingOriginalPrice: 399,
+    sizes: [{ size: "M", label: "רגיל", price: 189, originalPrice: 399, isDefault: true }],
+  },
+  {
+    slug: "snake-plant-wine-giftset",
+    title: "מארז מתנה - עציץ שרך ובקבוק יין",
+    description: "פריט מהמלאי שלנו — תיאור מלא בקרוב",
+    longDescription: "פריט מהמלאי שלנו — תיאור מלא בקרוב",
+    category: "unsorted",
+    productType: "giftset",
+    images: ["/products/snake-plant-wine-giftset.jpeg"],
+    startingPrice: 189,
+    startingOriginalPrice: 399,
+    sizes: [{ size: "M", label: "רגיל", price: 189, originalPrice: 399, isDefault: true }],
+  },
+  {
+    slug: "croton-smiley-pot",
+    title: "עציץ קרוטון באגרטל חייכן",
+    description: "פריט מהמלאי שלנו — תיאור מלא בקרוב",
+    longDescription: "פריט מהמלאי שלנו — תיאור מלא בקרוב",
+    category: "unsorted",
+    productType: "plant",
+    images: ["/products/croton-smiley-pot.jpeg"],
+    startingPrice: 189,
+    startingOriginalPrice: 399,
+    sizes: [{ size: "M", label: "רגיל", price: 189, originalPrice: 399, isDefault: true }],
+  },
+];
 
 export const events: EventCollection[] = [
   {

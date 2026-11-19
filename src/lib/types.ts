@@ -12,6 +12,7 @@ export interface SizeOption {
   size: Size;
   label: string;
   price: number;
+  originalPrice?: number;
   isDefault?: boolean;
 }
 
@@ -31,6 +32,7 @@ export interface Product {
   productType: ProductType;
   images: string[];
   startingPrice: number;
+  startingOriginalPrice?: number;
   sizes: SizeOption[];
   bestSeller?: boolean;
 }

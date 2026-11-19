@@ -57,6 +57,12 @@ export default function ProductClient({ product }: { product: Product }) {
         <div className="md:sticky md:top-20 md:self-start">
           <div className="px-6 py-10 md:px-14 md:py-16 max-w-md md:ml-auto">
             <h1 className="font-serif text-3xl sm:text-4xl text-ink">{product.title}</h1>
+            <div className="flex items-baseline gap-3 mt-3">
+              <p className="text-xl font-semibold text-ink">{sizeOption.price} ₪</p>
+              {sizeOption.originalPrice && (
+                <p className="text-sm text-ink/40 line-through">{sizeOption.originalPrice} ₪</p>
+              )}
+            </div>
             <p className="text-ink/60 mt-3 leading-7 text-sm font-light">{product.longDescription}</p>
 
             {/* Size selector */}

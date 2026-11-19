@@ -43,6 +43,11 @@ export default function ProductCard({ product }: { product: Product }) {
             נמכר הכי הרבה
           </span>
         )}
+        {!product.bestSeller && product.startingOriginalPrice && (
+          <span className="absolute top-3 right-3 text-[10px] tracked-xs uppercase text-white bg-accent px-2.5 py-1 rounded-full">
+            חסכו {product.startingOriginalPrice - product.startingPrice} ₪
+          </span>
+        )}
         <button
           type="button"
           aria-label={wishlisted ? "הסר מרשימת המשאלות" : "הוסף לרשימת המשאלות"}
@@ -66,7 +71,12 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="pt-3">
         <h3 className="text-sm text-ink/70 line-clamp-1">{product.title}</h3>
-        <p className="text-sm text-ink mt-1">החל מ-{product.startingPrice} ₪</p>
+        <div className="flex items-baseline gap-2 mt-1">
+          <p className="text-sm text-ink">החל מ-{product.startingPrice} ₪</p>
+          {product.startingOriginalPrice && (
+            <p className="text-xs text-ink/40 line-through">{product.startingOriginalPrice} ₪</p>
+          )}
+        </div>
       </div>
     </Link>
   );
