@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { products, categories, services } from "@/lib/data";
+import { products, categories, categoryIcons, services } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import { WHATSAPP_URL } from "@/lib/contact";
 
 const titles: Record<string, string> = {
   bouquets: "כל הזרים",
   ...Object.fromEntries(categories.map((c) => [c.slug, c.title])),
+  ...Object.fromEntries(categoryIcons.map((c) => [c.slug, c.title])),
   ...Object.fromEntries(services.map((s) => [s.slug, s.title])),
 };
 
@@ -58,6 +59,7 @@ export function generateStaticParams() {
   return [
     { slug: "bouquets" },
     ...categories.map((c) => ({ slug: c.slug })),
+    ...categoryIcons.map((c) => ({ slug: c.slug })),
     ...services.map((s) => ({ slug: s.slug })),
   ];
 }

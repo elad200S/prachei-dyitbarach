@@ -24,6 +24,17 @@ export const categories: Category[] = [
   { slug: "hydrangea", title: "הידרנגיה", image: img("1447875569765-2b3db822bec9") },
 ];
 
+export const categoryIcons: Category[] = [
+  { slug: "lily", title: "לילים", image: "/categories/lily-icon.png" },
+  { slug: "gerbera", title: "גרברות", image: "/categories/gerbera-icon.png" },
+  { slug: "orchids", title: "סחלבים", image: "/categories/orchid-icon.png" },
+  { slug: "peonies", title: "פיוניות", image: "/categories/peony-icon.png" },
+  { slug: "sunflowers", title: "חמניות", image: "/categories/sunflower-icon.png" },
+  { slug: "tulips", title: "טוליפנים", image: "/categories/tulip-icon.png" },
+  { slug: "roses", title: "ורדים", image: "/categories/rose-icon.png" },
+  { slug: "houseplants", title: "צמחי בית", image: "/categories/houseplant-icon.png" },
+];
+
 export const services: Service[] = [
   { slug: "weddings", title: "חתונות", image: img("1519225421980-715cb0215aed") },
   { slug: "corporate", title: "מתנות לעסקים", image: img("1561181274-ac181107c1ff") },

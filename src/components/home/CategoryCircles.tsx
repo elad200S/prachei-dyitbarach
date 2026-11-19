@@ -1,19 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { categories } from "@/lib/data";
+import { categoryIcons } from "@/lib/data";
 
 export default function CategoryCircles() {
   return (
     <section className="py-10 md:py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-10">
         <div className="flex gap-8 overflow-x-auto no-scrollbar md:justify-between">
-          {categories.map((category) => (
+          {categoryIcons.map((category) => (
             <Link
               key={category.slug}
               href={`/category/${category.slug}`}
               className="group shrink-0 flex flex-col items-center gap-3 w-28 sm:w-36"
             >
-              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-1 ring-black/10 group-hover:ring-accent transition-all">
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-0 group-hover:ring-2 group-hover:ring-accent transition-all">
                 <Image
                   src={category.image}
                   alt={category.title}
