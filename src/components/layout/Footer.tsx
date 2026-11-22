@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
-import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_URL } from "@/lib/contact";
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_URL, MAPS_URL } from "@/lib/contact";
 import Logo from "./Logo";
 
 function InstagramIcon() {
@@ -59,7 +59,11 @@ export default function Footer() {
         <div>
           <p className="text-[11px] tracked-xs uppercase text-ink/50 mb-4">צור קשר</p>
           <ul className="space-y-2 text-sm text-ink/70">
-            <li>משה שרת 4, חולון</li>
+            <li>
+              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors">
+                משה שרת 4, חולון
+              </a>
+            </li>
             <li dir="ltr" className="text-right">{PHONE_DISPLAY}</li>
             <li dir="ltr">{CONTACT_EMAIL}</li>
           </ul>
@@ -109,6 +113,22 @@ export default function Footer() {
             <Link href="/cancellations" className="hover:text-ink transition-colors">ביטולים והחזרות</Link>
             <Link href="/accessibility" className="hover:text-ink transition-colors">נגישות</Link>
           </div>
+        </div>
+      </div>
+
+      <div className="border-t border-black/10">
+        <div className="mx-auto max-w-7xl px-6 py-4 text-center text-xs text-ink/40">
+          <p>
+            האתר נבנה ע&quot;י{" "}
+            <a
+              href="https://www.heydigital.co.il/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-ink transition-colors"
+            >
+              HEY DIGITAL
+            </a>
+          </p>
         </div>
       </div>
     </footer>
