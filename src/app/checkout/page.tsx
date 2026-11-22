@@ -69,6 +69,7 @@ export default function CheckoutPage() {
           rushDelivery,
           paymentMethod: paymentOptions.find((p) => p.id === payment)?.label ?? payment,
           items: items.map((item) => ({
+            slug: item.slug,
             title: item.title,
             image: item.image,
             sizeLabel: item.sizeLabel,

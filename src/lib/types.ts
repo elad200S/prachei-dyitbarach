@@ -35,6 +35,7 @@ export interface Product {
   startingOriginalPrice?: number;
   sizes: SizeOption[];
   bestSeller?: boolean;
+  emailThemeColor?: string;
 }
 
 export interface Category {

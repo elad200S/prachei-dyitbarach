@@ -1,6 +1,7 @@
 import { neon } from "@neondatabase/serverless";
 
 export interface OrderItem {
+  slug?: string;
   title: string;
   image: string;
   sizeLabel: string;

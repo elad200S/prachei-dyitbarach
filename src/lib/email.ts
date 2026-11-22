@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import type { Order, OrderItem } from "./db";
 import { formatDate, formatDateTime } from "./format";
+import { products } from "./data";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://elad-flowers.vercel.app";
 const INK = "#121212";
@@ -54,6 +55,12 @@ function itemsHtml(items: OrderItem[]) {
 const ACCENT = "#7e1c2e";
 const ACCENT_SOFT = "#fadad1";
 
+function orderThemeColor(order: Order) {
+  const firstSlug = order.items[0]?.slug;
+  const product = firstSlug ? products.find((p) => p.slug === firstSlug) : undefined;
+  return product?.emailThemeColor ?? ACCENT_SOFT;
+}
+
 function cardMessageHtml(message: string | null | undefined, label: string) {
   if (!message) return "";
   const withBreaks = message.replace(/\n/g, "<br/>");
@@ -68,14 +75,15 @@ function cardMessageHtml(message: string | null | undefined, label: string) {
     </table>`;
 }
 
-function emailShell(opts: { title: string; preheader: string; body: string }) {
+function emailShell(opts: { title: string; preheader: string; body: string; themeColor?: string }) {
   const logoUrl = `${SITE_URL}/logo-icon.png`;
+  const theme = opts.themeColor ?? ACCENT_SOFT;
   return `
-    <div dir="rtl" style="font-family: Arial, sans-serif; background:${ACCENT_SOFT}; padding:28px 12px;">
+    <div dir="rtl" style="font-family: Arial, sans-serif; background:${theme}; padding:28px 12px;">
       <span style="display:none;max-height:0;overflow:hidden;">${opts.preheader}</span>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #ececec;">
         <tr>
-          <td style="padding:26px 28px 18px;text-align:center;background:${ACCENT_SOFT};border-bottom:2px solid ${ACCENT};">
+          <td style="padding:26px 28px 18px;text-align:center;background:${theme};border-bottom:2px solid ${ACCENT};">
             <img src="${logoUrl}" width="40" height="40" alt="" style="display:block;margin:0 auto 6px;width:40px;height:40px;object-fit:contain;" />
             <div style="font-family: Georgia, 'Times New Roman', serif; font-size:21px; letter-spacing:0.03em; color:${ACCENT};">
               פרחי ד' יתברך
@@ -140,6 +148,7 @@ export async function sendOrderNotificationEmail(order: Order) {
       title: `הזמנה חדשה #${order.id}`,
       preheader: `הזמנה חדשה מ-${order.sender_name}, סה"כ ${order.total} ₪`,
       body,
+      themeColor: orderThemeColor(order),
     }),
   });
 }
@@ -193,6 +202,7 @@ export async function sendCustomerConfirmationEmail(order: Order) {
       title: "ההזמנה שלך התקבלה",
       preheader: `תודה ${order.sender_name}, ההזמנה שלך (#${order.id}) התקבלה בהצלחה`,
       body,
+      themeColor: orderThemeColor(order),
     }),
   });
 }

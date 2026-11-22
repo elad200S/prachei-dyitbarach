@@ -82,6 +82,7 @@ export const products: Product[] = [
     startingPrice: 189,
     startingOriginalPrice: 399,
     sizes: [{ size: "M", label: "רגיל", price: 189, originalPrice: 399, isDefault: true }],
+    emailThemeColor: "#fdeae6",
   },
   {
     slug: "red-roses-black-wrap",
@@ -94,6 +95,7 @@ export const products: Product[] = [
     startingPrice: 189,
     startingOriginalPrice: 399,
     sizes: [{ size: "M", label: "רגיל", price: 189, originalPrice: 399, isDefault: true }],
+    emailThemeColor: "#f7e1e4",
   },
   {
     slug: "snake-plant-wine-giftset",
@@ -106,6 +108,7 @@ export const products: Product[] = [
     startingPrice: 189,
     startingOriginalPrice: 399,
     sizes: [{ size: "M", label: "רגיל", price: 189, originalPrice: 399, isDefault: true }],
+    emailThemeColor: "#f1ece2",
   },
   {
     slug: "croton-smiley-pot",
@@ -118,6 +121,7 @@ export const products: Product[] = [
     startingPrice: 189,
     startingOriginalPrice: 399,
     sizes: [{ size: "M", label: "רגיל", price: 189, originalPrice: 399, isDefault: true }],
+    emailThemeColor: "#e9f2ea",
   },
 ];
 
