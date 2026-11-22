@@ -7,13 +7,13 @@ import { CalendarDays, Pause, Play } from "lucide-react";
 
 const slides = [
   {
-    image: "/hero/rotator/promo-20-off.webp",
+    image: "/hero/rotator/promo-20-off-v2.webp",
     alt: "מבצע זר שני ב-20% הנחה",
     href: "/shop",
   },
   {
-    image: "/hero/rotator/friday-delivery.webp",
-    alt: "משלוחים בשישי בחולון בתוך שעה",
+    image: "/hero/rotator/fast-delivery-holon.webp",
+    alt: "משלוחים מהירים בתוך חולון",
     href: "/delivery",
   },
   {
