@@ -6,7 +6,7 @@ export default function ContactPage() {
       <h1 className="font-serif text-3xl sm:text-4xl text-ink mb-6">צור קשר</h1>
       <div className="hidden w-16 mx-auto mb-8" />
       <ul className="space-y-3 text-ink/80">
-        <li>רחוב סוקולוב 20, חולון</li>
+        <li>משה שרת 4, חולון</li>
         <li dir="ltr">{PHONE_DISPLAY}</li>
         <li dir="ltr">{CONTACT_EMAIL}</li>
       </ul>

@@ -51,7 +51,7 @@ const localBusinessJsonLd = {
   priceRange: "₪₪",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "רחוב סוקולוב 20",
+    streetAddress: "משה שרת 4",
     addressLocality: "חולון",
     addressCountry: "IL",
   },

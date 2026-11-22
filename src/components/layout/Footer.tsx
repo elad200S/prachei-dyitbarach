@@ -59,7 +59,7 @@ export default function Footer() {
         <div>
           <p className="text-[11px] tracked-xs uppercase text-ink/50 mb-4">צור קשר</p>
           <ul className="space-y-2 text-sm text-ink/70">
-            <li>רחוב סוקולוב 20, חולון</li>
+            <li>משה שרת 4, חולון</li>
             <li dir="ltr" className="text-right">{PHONE_DISPLAY}</li>
             <li dir="ltr">{CONTACT_EMAIL}</li>
           </ul>
