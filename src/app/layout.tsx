@@ -69,7 +69,7 @@ const localBusinessJsonLd = {
       closes: "14:00",
     },
   ],
-  hasMap: "https://share.google/l4zXlMKIljRP2TcZy",
+  hasMap: "https://share.google/67bzfN4vgwxinJUO7",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
