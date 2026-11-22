@@ -17,8 +17,8 @@ const slides = [
     href: "/delivery",
   },
   {
-    image: "/hero/rotator/combo-offers.webp",
-    alt: "מבצעים שיגרמו לכם לחייך",
+    image: "/hero/rotator/bouquet-ribbon-20-off.webp",
+    alt: "זר שני ב-20% הנחה",
     href: "/shop",
   },
 ];
