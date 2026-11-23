@@ -82,6 +82,18 @@ export default function Footer() {
 
       <div className="border-t border-black/10">
         <div className="mx-auto max-w-7xl px-6 py-10">
+          <p className="text-[11px] tracked-xs uppercase text-ink/50 mb-4">המיקום שלנו</p>
+          <iframe
+            title="המיקום שלנו במפה"
+            src="https://maps.google.com/maps?q=%D7%9E%D7%A9%D7%94%20%D7%A9%D7%A8%D7%AA%204%2C%20%D7%97%D7%95%D7%9C%D7%95%D7%9F&output=embed"
+            className="w-full h-56 border border-black/10"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div className="border-t border-black/10">
+        <div className="mx-auto max-w-7xl px-6 py-10">
           <p className="text-[11px] tracked-xs uppercase text-ink/50 mb-4">חיפושים פופולריים</p>
           <div className="flex flex-wrap gap-x-3 gap-y-2 text-xs text-ink/50">
             <Link href="/shop/bouquet" className="hover:text-ink transition-colors">זר לכלה בחולון</Link>
