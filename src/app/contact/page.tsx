@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_URL } from "@/lib/contact";
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_URL, MAPS_URL } from "@/lib/contact";
 
 export default function ContactPage() {
   return (
@@ -31,12 +31,12 @@ export default function ContactPage() {
       <div className="mt-10">
         <iframe
           title="המיקום שלנו במפה"
-          src="https://maps.google.com/maps?q=%D7%A8%D7%97%D7%95%D7%91%20%D7%A1%D7%95%D7%A7%D7%95%D7%9C%D7%95%D7%91%2020%2C%20%D7%97%D7%95%D7%9C%D7%95%D7%9F&output=embed"
+          src="https://maps.google.com/maps?q=%D7%9E%D7%A9%D7%94%20%D7%A9%D7%A8%D7%AA%204%2C%20%D7%97%D7%95%D7%9C%D7%95%D7%9F&output=embed"
           className="w-full h-64 border border-black/10"
           loading="lazy"
         />
         <a
-          href="https://share.google/l4zXlMKIljRP2TcZy"
+          href={MAPS_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block mt-3 text-[11px] tracking-wide uppercase text-ink/70 hover:text-ink transition-colors border-b border-ink/30"
