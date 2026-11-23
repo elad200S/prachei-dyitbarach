@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
-import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_URL, MAPS_URL } from "@/lib/contact";
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_URL, MAPS_URL, GOOGLE_REVIEW_URL } from "@/lib/contact";
 import Logo from "./Logo";
 
 function InstagramIcon() {
@@ -67,6 +67,14 @@ export default function Footer() {
             <li dir="ltr" className="text-right">{PHONE_DISPLAY}</li>
             <li dir="ltr">{CONTACT_EMAIL}</li>
           </ul>
+          <a
+            href={GOOGLE_REVIEW_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-4 text-[11px] tracked-xs uppercase text-ink/70 hover:text-ink transition-colors border-b border-ink/30"
+          >
+            ⭐ השאירו לנו ביקורת בגוגל
+          </a>
           <p className="text-[11px] tracked-xs uppercase text-ink/50 mt-6 mb-2">אמצעי תשלום</p>
           <p className="text-sm text-ink/70">ביט · אשראי · Apple Pay · Google Pay</p>
         </div>

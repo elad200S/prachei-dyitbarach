@@ -4,6 +4,7 @@ export const WHATSAPP_URL = "https://wa.me/972528980414";
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://elad-flowers.vercel.app";
 export const CONTACT_EMAIL = "linoyyy_1@walla.com";
 export const MAPS_URL = "https://share.google/67bzfN4vgwxinJUO7";
+export const GOOGLE_REVIEW_URL = "https://share.google/ZOLl4NgLOP8sLc206";
 
 export function toWhatsAppLink(localPhone: string, text?: string) {
   const digits = localPhone.replace(/\D/g, "");

@@ -10,7 +10,7 @@ import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import AccessibilityWidget from "@/components/layout/AccessibilityWidget";
 import CartDrawer from "@/components/cart/CartDrawer";
 import SmoothScroll from "@/components/layout/SmoothScroll";
-import { SITE_URL, MAPS_URL } from "@/lib/contact";
+import { SITE_URL, MAPS_URL, GOOGLE_REVIEW_URL } from "@/lib/contact";
 
 const heading = Frank_Ruhl_Libre({
   variable: "--font-heading",
@@ -70,6 +70,7 @@ const localBusinessJsonLd = {
     },
   ],
   hasMap: MAPS_URL,
+  sameAs: [GOOGLE_REVIEW_URL],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
