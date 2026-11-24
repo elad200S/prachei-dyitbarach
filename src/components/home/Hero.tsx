@@ -11,6 +11,11 @@ const slides = [
     alt: "פרחים שאומרים הכל - זרים בעיצוב אישי בחולון והסביבה",
     href: "/shop",
   },
+  {
+    image: "/hero/rotator/every-occasion-flowers.webp",
+    alt: "כל סיבה היא סיבה לפרחים - בוחרים זר, משמחים מישהו",
+    href: "/shop",
+  },
 ];
 
 export default function Hero() {
