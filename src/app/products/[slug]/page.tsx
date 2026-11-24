@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { products } from "@/lib/data";
+import { getProductBySlug } from "@/lib/db";
 import { SITE_URL } from "@/lib/contact";
 import ProductClient from "@/components/product/ProductClient";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -10,7 +12,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = products.find((p) => p.slug === slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
 
   return {
@@ -31,7 +33,7 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = products.find((p) => p.slug === slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) notFound();
 
@@ -59,8 +61,4 @@ export default async function ProductPage({
       <ProductClient product={product} />
     </>
   );
-}
-
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
 }

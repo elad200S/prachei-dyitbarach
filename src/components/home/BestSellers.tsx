@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { products } from "@/lib/data";
+import type { Product } from "@/lib/types";
 import ProductCard from "@/components/ProductCard";
 
-export default function BestSellers() {
+export default function BestSellers({ products }: { products: Product[] }) {
   const bestSellers = products.filter((p) => p.bestSeller);
   if (bestSellers.length === 0) return null;
 

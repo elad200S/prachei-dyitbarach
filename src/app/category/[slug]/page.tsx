@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { products, categories, categoryIcons, services } from "@/lib/data";
+import { categories, categoryIcons, services } from "@/lib/data";
+import { getProducts } from "@/lib/db";
 import ProductCard from "@/components/ProductCard";
 import { WHATSAPP_URL } from "@/lib/contact";
+
+export const dynamic = "force-dynamic";
 
 const titles: Record<string, string> = {
   bouquets: "כל הזרים",
@@ -17,6 +20,7 @@ export default async function CategoryPage({
 }) {
   const { slug } = await params;
   const title = titles[slug] ?? "קולקציה";
+  const products = await getProducts();
   const filtered = slug === "bouquets" ? products : products.filter((p) => p.category === slug);
 
   return (
@@ -53,13 +57,4 @@ export default async function CategoryPage({
       </div>
     </div>
   );
-}
-
-export function generateStaticParams() {
-  return [
-    { slug: "bouquets" },
-    ...categories.map((c) => ({ slug: c.slug })),
-    ...categoryIcons.map((c) => ({ slug: c.slug })),
-    ...services.map((s) => ({ slug: s.slug })),
-  ];
 }

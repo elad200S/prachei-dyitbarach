@@ -1,17 +1,30 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { products } from "@/lib/data";
+import type { Product } from "@/lib/types";
 
 export default function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("");
+  const [products, setProducts] = useState<Product[]>([]);
+  const loaded = useRef(false);
 
   useEffect(() => {
-    if (!open) setQuery("");
+    if (!open) {
+      setQuery("");
+      return;
+    }
+    if (loaded.current) return;
+    loaded.current = true;
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data.products ?? []))
+      .catch(() => {
+        loaded.current = false;
+      });
   }, [open]);
 
   useEffect(() => {
@@ -29,7 +42,7 @@ export default function SearchOverlay({ open, onClose }: { open: boolean; onClos
     return products
       .filter((p) => p.title.includes(q) || p.description.includes(q))
       .slice(0, 8);
-  }, [query]);
+  }, [query, products]);
 
   return (
     <AnimatePresence>

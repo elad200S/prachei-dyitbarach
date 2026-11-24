@@ -1,8 +1,12 @@
 import type { MetadataRoute } from "next";
-import { products, categories, events } from "@/lib/data";
+import { categories, events } from "@/lib/data";
+import { getProducts } from "@/lib/db";
 import { SITE_URL } from "@/lib/contact";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = "force-dynamic";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getProducts();
   const staticPaths = [
     "",
     "shop",

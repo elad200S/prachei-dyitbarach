@@ -1,7 +1,6 @@
 import { Resend } from "resend";
-import type { Order, OrderItem } from "./db";
+import { getProductBySlug, type Order, type OrderItem } from "./db";
 import { formatDate, formatDateTime } from "./format";
-import { products } from "./data";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://elad-flowers.vercel.app";
 const INK = "#121212";
@@ -55,9 +54,9 @@ function itemsHtml(items: OrderItem[]) {
 const ACCENT = "#7e1c2e";
 const ACCENT_SOFT = "#fadad1";
 
-function orderThemeColor(order: Order) {
+async function orderThemeColor(order: Order) {
   const firstSlug = order.items[0]?.slug;
-  const product = firstSlug ? products.find((p) => p.slug === firstSlug) : undefined;
+  const product = firstSlug ? await getProductBySlug(firstSlug) : null;
   return product?.emailThemeColor ?? ACCENT_SOFT;
 }
 
@@ -148,7 +147,7 @@ export async function sendOrderNotificationEmail(order: Order) {
       title: `הזמנה חדשה #${order.id}`,
       preheader: `הזמנה חדשה מ-${order.sender_name}, סה"כ ${order.total} ₪`,
       body,
-      themeColor: orderThemeColor(order),
+      themeColor: await orderThemeColor(order),
     }),
   });
 }
@@ -202,7 +201,7 @@ export async function sendCustomerConfirmationEmail(order: Order) {
       title: "ההזמנה שלך התקבלה",
       preheader: `תודה ${order.sender_name}, ההזמנה שלך (#${order.id}) התקבלה בהצלחה`,
       body,
-      themeColor: orderThemeColor(order),
+      themeColor: await orderThemeColor(order),
     }),
   });
 }

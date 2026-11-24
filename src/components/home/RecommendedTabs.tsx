@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { products, productTypes } from "@/lib/data";
+import { productTypes } from "@/lib/data";
+import type { Product } from "@/lib/types";
 import ProductCard from "@/components/ProductCard";
 
 const ALL = "all";
 const tabs = [{ slug: ALL, title: "הכל" }, ...productTypes];
 const PAGE_SIZE = 8;
 
-export default function RecommendedTabs() {
+export default function RecommendedTabs({ products }: { products: Product[] }) {
   const [active, setActive] = useState(ALL);
   const filtered =
     active === ALL ? products : products.filter((p) => p.productType === active);

@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { events, products } from "@/lib/data";
+import { events } from "@/lib/data";
+import { getProducts } from "@/lib/db";
 import ProductCard from "@/components/ProductCard";
 import { WHATSAPP_URL } from "@/lib/contact";
+
+export const dynamic = "force-dynamic";
 
 export default async function EventPage({
   params,
@@ -13,6 +16,7 @@ export default async function EventPage({
   const event = events.find((e) => e.slug === slug);
   if (!event) notFound();
 
+  const products = await getProducts();
   const filtered = products.filter((p) => event.productSlugs.includes(p.slug));
 
   return (
@@ -48,8 +52,4 @@ export default async function EventPage({
       </div>
     </div>
   );
-}
-
-export function generateStaticParams() {
-  return events.map((e) => ({ slug: e.slug }));
 }

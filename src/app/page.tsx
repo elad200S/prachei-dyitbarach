@@ -5,13 +5,18 @@ import CategoryCircles from "@/components/home/CategoryCircles";
 import BestSellers from "@/components/home/BestSellers";
 import Testimonials from "@/components/home/Testimonials";
 import EditorialIntro from "@/components/home/EditorialIntro";
+import { getProducts } from "@/lib/db";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const products = await getProducts();
+
   return (
     <>
       <Hero />
-      <RecommendedTabs />
-      <BestSellers />
+      <RecommendedTabs products={products} />
+      <BestSellers products={products} />
       <CategoryCircles />
       <Advantages />
       <Testimonials />

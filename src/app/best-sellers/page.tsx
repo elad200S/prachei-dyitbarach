@@ -1,12 +1,15 @@
 import Image from "next/image";
-import { products } from "@/lib/data";
+import { getProducts } from "@/lib/db";
 import ProductCard from "@/components/ProductCard";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "המוצרים הנמכרים ביותר · פרחי ד' יתברך",
 };
 
-export default function BestSellersPage() {
+export default async function BestSellersPage() {
+  const products = await getProducts();
   const bestSellers = products.filter((p) => p.bestSeller);
 
   return (

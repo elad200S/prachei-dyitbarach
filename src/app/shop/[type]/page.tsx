@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { products, productTypes } from "@/lib/data";
+import { productTypes } from "@/lib/data";
+import { getProducts } from "@/lib/db";
 import ProductCard from "@/components/ProductCard";
 import { WHATSAPP_URL } from "@/lib/contact";
+
+export const dynamic = "force-dynamic";
 
 export default async function ProductTypePage({
   params,
@@ -13,6 +16,7 @@ export default async function ProductTypePage({
   const productType = productTypes.find((t) => t.slug === type);
   if (!productType) notFound();
 
+  const products = await getProducts();
   const filtered = products.filter((p) => p.productType === type);
 
   return (
@@ -48,8 +52,4 @@ export default async function ProductTypePage({
       </div>
     </div>
   );
-}
-
-export function generateStaticParams() {
-  return productTypes.map((t) => ({ type: t.slug }));
 }

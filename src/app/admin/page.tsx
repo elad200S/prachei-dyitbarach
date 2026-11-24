@@ -20,9 +20,14 @@ export default async function AdminOrdersPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="font-serif text-2xl sm:text-3xl text-ink">ניהול הזמנות</h1>
-          <Link href="/admin/carts" className="text-sm text-ink/60 hover:text-ink">
-            עגלות נטושות ←
-          </Link>
+          <div className="flex gap-4">
+            <Link href="/admin/carts" className="text-sm text-ink/60 hover:text-ink">
+              עגלות נטושות ←
+            </Link>
+            <Link href="/admin/products" className="text-sm text-ink/60 hover:text-ink">
+              ניהול מוצרים ←
+            </Link>
+          </div>
         </div>
         <LogoutButton />
       </div>
