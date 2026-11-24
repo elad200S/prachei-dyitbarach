@@ -1,5 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import type { Product, SizeOption } from "./types";
+import { SEED_BATCH_KEY, seedBatch } from "./seedProducts";
 
 export interface OrderItem {
   slug?: string;
@@ -171,6 +172,27 @@ async function ensureSchema() {
           ${p.slug}, ${p.title}, ${p.description}, ${p.longDescription}, ${p.category}, ${p.productType},
           ${JSON.stringify(p.images)}, ${p.startingPrice}, ${p.startingOriginalPrice ?? null},
           ${JSON.stringify(p.sizes)}, ${p.emailThemeColor ?? null}, ${i}
+        )
+        ON CONFLICT (slug) DO NOTHING
+      `;
+    }
+  }
+
+  await sql`CREATE TABLE IF NOT EXISTS seed_flags (key TEXT PRIMARY KEY)`;
+  const flagged = await sql`INSERT INTO seed_flags (key) VALUES (${SEED_BATCH_KEY}) ON CONFLICT DO NOTHING RETURNING key`;
+  if (flagged.length > 0) {
+    const [{ next }] = await sql`SELECT coalesce(max(sort_order) + 1, 0) AS next FROM products`;
+    for (let i = 0; i < seedBatch.length; i++) {
+      const p = seedBatch[i];
+      const sizes = [{ size: "M", label: "רגיל", price: p.price, isDefault: true }];
+      await sql`
+        INSERT INTO products (
+          slug, title, description, long_description, category, product_type,
+          images, starting_price, starting_original_price, sizes, email_theme_color, sort_order
+        ) VALUES (
+          ${p.slug}, ${p.title}, ${"פריט מהמלאי שלנו — תיאור מלא בקרוב"}, ${"פריט מהמלאי שלנו — תיאור מלא בקרוב"},
+          ${"unsorted"}, ${p.productType}, ${JSON.stringify(p.images)}, ${p.price}, ${null},
+          ${JSON.stringify(sizes)}, ${null}, ${Number(next) + i}
         )
         ON CONFLICT (slug) DO NOTHING
       `;
