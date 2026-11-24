@@ -7,18 +7,8 @@ import { CalendarDays, Pause, Play } from "lucide-react";
 
 const slides = [
   {
-    image: "/hero/rotator/promo-20-off-v2.webp",
-    alt: "מבצע זר שני ב-20% הנחה",
-    href: "/shop",
-  },
-  {
-    image: "/hero/rotator/fast-delivery-holon.webp",
-    alt: "משלוחים מהירים בתוך חולון",
-    href: "/delivery",
-  },
-  {
-    image: "/hero/rotator/bouquet-ribbon-20-off.webp",
-    alt: "זר שני ב-20% הנחה",
+    image: "/hero/rotator/flowers-say-it-all.webp",
+    alt: "פרחים שאומרים הכל - זרים בעיצוב אישי בחולון והסביבה",
     href: "/shop",
   },
 ];
@@ -117,32 +107,34 @@ export default function Hero() {
           </Link>
         ))}
 
-        <div className="absolute bottom-3 sm:bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
-          <div className="flex items-center gap-2">
-            {slides.map((s, i) => (
-              <button
-                key={s.image}
-                type="button"
-                aria-label={`שקופית ${i + 1}`}
-                onClick={() => setIndex(i)}
-                className="h-1.5 rounded-full transition-all"
-                style={{
-                  width: i === index ? 22 : 8,
-                  backgroundColor: "white",
-                  opacity: i === index ? 1 : 0.5,
-                }}
-              />
-            ))}
+        {slides.length > 1 && (
+          <div className="absolute bottom-3 sm:bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
+            <div className="flex items-center gap-2">
+              {slides.map((s, i) => (
+                <button
+                  key={s.image}
+                  type="button"
+                  aria-label={`שקופית ${i + 1}`}
+                  onClick={() => setIndex(i)}
+                  className="h-1.5 rounded-full transition-all"
+                  style={{
+                    width: i === index ? 22 : 8,
+                    backgroundColor: "white",
+                    opacity: i === index ? 1 : 0.5,
+                  }}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-label={userPaused ? "המשך החלפת שקופיות" : "עצור החלפת שקופיות"}
+              onClick={() => setUserPaused((p) => !p)}
+              className="w-6 h-6 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors"
+            >
+              {userPaused ? <Play size={11} /> : <Pause size={11} />}
+            </button>
           </div>
-          <button
-            type="button"
-            aria-label={userPaused ? "המשך החלפת שקופיות" : "עצור החלפת שקופיות"}
-            onClick={() => setUserPaused((p) => !p)}
-            className="w-6 h-6 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors"
-          >
-            {userPaused ? <Play size={11} /> : <Pause size={11} />}
-          </button>
-        </div>
+        )}
       </div>
 
       <div className="relative z-10 -mt-6 px-4">
