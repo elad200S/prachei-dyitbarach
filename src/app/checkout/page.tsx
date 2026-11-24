@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
@@ -33,8 +33,63 @@ export default function CheckoutPage() {
   const [placed, setPlaced] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [senderName, setSenderName] = useState("");
+  const [senderPhone, setSenderPhone] = useState("");
+  const [senderEmail, setSenderEmail] = useState("");
+  // A stable anonymous id so we can recognize this visitor's cart across
+  // retries, without any login. Only read/written in effects and handlers,
+  // never rendered, so a ref (not state) is enough.
+  const cartSessionId = useRef("");
 
   const today = useMemo(() => new Date().toISOString().split("T")[0], []);
+
+  useEffect(() => {
+    try {
+      let id = localStorage.getItem("cart_session_id");
+      if (!id) {
+        id = crypto.randomUUID();
+        localStorage.setItem("cart_session_id", id);
+      }
+      cartSessionId.current = id;
+    } catch {
+      cartSessionId.current = crypto.randomUUID();
+    }
+  }, []);
+
+  // Once we have a way to reach the customer (phone or email) and items in
+  // the cart, save a draft of it. If they never complete checkout, this is
+  // what shows up as an "abandoned cart" for the florist to follow up on.
+  useEffect(() => {
+    const id = cartSessionId.current;
+    if (!id || items.length === 0 || (!senderPhone && !senderEmail)) return;
+
+    const timeout = setTimeout(() => {
+      fetch("/api/cart-sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id,
+          senderName,
+          senderPhone,
+          senderEmail,
+          city,
+          items: items.map((item) => ({
+            slug: item.slug,
+            title: item.title,
+            image: item.image,
+            sizeLabel: item.sizeLabel,
+            quantity: item.quantity,
+            basePrice: item.basePrice,
+            addOns: item.addOns.map((a) => ({ label: a.label, price: a.price })),
+          })),
+          subtotal,
+        }),
+      }).catch(() => {});
+    }, 1200);
+
+    return () => clearTimeout(timeout);
+  }, [senderName, senderPhone, senderEmail, city, items, subtotal]);
+
   const selectedZone = deliveryZones.find((z) => z.city === city) ?? deliveryZones[0];
   const total = subtotal + selectedZone.cost + (rushDelivery ? RUSH_DELIVERY_COST : 0);
 
@@ -56,9 +111,10 @@ export default function CheckoutPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          senderName: form.get("senderName"),
-          senderPhone: form.get("senderPhone"),
-          senderEmail: form.get("senderEmail"),
+          senderName,
+          senderPhone,
+          senderEmail,
+          cartSessionId: cartSessionId.current,
           recipientName: form.get("recipientName"),
           recipientPhone: form.get("recipientPhone"),
           city,
@@ -91,6 +147,13 @@ export default function CheckoutPage() {
       }
 
       clearCart();
+      // Rotate the id so a future cart from this browser doesn't try to update
+      // a session already marked completed (and get silently ignored).
+      try {
+        const newId = crypto.randomUUID();
+        localStorage.setItem("cart_session_id", newId);
+        cartSessionId.current = newId;
+      } catch {}
       setPlaced(true);
     } catch {
       setError("שגיאה בשליחת ההזמנה, נסו שוב.");
@@ -145,15 +208,30 @@ export default function CheckoutPage() {
         <section>
           <h2 className="font-serif text-xl text-ink mb-4">פרטי השולח/ת</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input name="senderName" required placeholder="שם מלא" className="input" />
-            <input name="senderPhone" required type="tel" placeholder="טלפון" className="input" dir="ltr" />
             <input
-              name="senderEmail"
+              required
+              placeholder="שם מלא"
+              className="input"
+              value={senderName}
+              onChange={(e) => setSenderName(e.target.value)}
+            />
+            <input
+              required
+              type="tel"
+              placeholder="טלפון"
+              className="input"
+              dir="ltr"
+              value={senderPhone}
+              onChange={(e) => setSenderPhone(e.target.value)}
+            />
+            <input
               required
               type="email"
               placeholder="אימייל (לקבלת אישור הזמנה)"
               className="input sm:col-span-2"
               dir="ltr"
+              value={senderEmail}
+              onChange={(e) => setSenderEmail(e.target.value)}
             />
           </div>
         </section>

@@ -33,6 +33,19 @@ export interface Order {
   fulfilled: boolean;
 }
 
+export interface CartSession {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  sender_name: string | null;
+  sender_phone: string | null;
+  sender_email: string | null;
+  city: string | null;
+  items: OrderItem[];
+  subtotal: number;
+  completed: boolean;
+}
+
 function getSql() {
   if (!process.env.DATABASE_URL) {
     throw new Error("DATABASE_URL is not set");
@@ -70,6 +83,21 @@ async function ensureSchema() {
   // Table may already exist from before these columns were added.
   await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS sender_email TEXT NOT NULL DEFAULT ''`;
   await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS delivery_time TEXT`;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS cart_sessions (
+      id TEXT PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      sender_name TEXT,
+      sender_phone TEXT,
+      sender_email TEXT,
+      city TEXT,
+      items JSONB NOT NULL DEFAULT '[]',
+      subtotal INTEGER NOT NULL DEFAULT 0,
+      completed BOOLEAN NOT NULL DEFAULT false
+    )
+  `;
 }
 
 function withSchema<T>(fn: () => Promise<T>): Promise<T> {
@@ -135,5 +163,62 @@ export async function setOrderFulfilled(id: number, fulfilled: boolean): Promise
   return withSchema(async () => {
     const sql = getSql();
     await sql`UPDATE orders SET fulfilled = ${fulfilled} WHERE id = ${id}`;
+  });
+}
+
+export interface CartSessionUpdate {
+  id: string;
+  senderName?: string;
+  senderPhone?: string;
+  senderEmail?: string;
+  city?: string;
+  items: OrderItem[];
+  subtotal: number;
+}
+
+export async function upsertCartSession(update: CartSessionUpdate): Promise<void> {
+  return withSchema(async () => {
+    const sql = getSql();
+    await sql`
+      INSERT INTO cart_sessions (id, sender_name, sender_phone, sender_email, city, items, subtotal, updated_at)
+      VALUES (
+        ${update.id}, ${update.senderName || null}, ${update.senderPhone || null},
+        ${update.senderEmail || null}, ${update.city || null}, ${JSON.stringify(update.items)},
+        ${update.subtotal}, now()
+      )
+      ON CONFLICT (id) DO UPDATE SET
+        sender_name = EXCLUDED.sender_name,
+        sender_phone = EXCLUDED.sender_phone,
+        sender_email = EXCLUDED.sender_email,
+        city = EXCLUDED.city,
+        items = EXCLUDED.items,
+        subtotal = EXCLUDED.subtotal,
+        updated_at = now()
+      WHERE cart_sessions.completed = false
+    `;
+  });
+}
+
+export async function markCartSessionCompleted(id: string): Promise<void> {
+  return withSchema(async () => {
+    const sql = getSql();
+    await sql`UPDATE cart_sessions SET completed = true WHERE id = ${id}`;
+  });
+}
+
+// Carts with at least one way to reach the customer, not yet converted into an
+// order, updated within the last two weeks (older ones aren't worth a callback).
+export async function listAbandonedCarts(): Promise<CartSession[]> {
+  return withSchema(async () => {
+    const sql = getSql();
+    const rows = await sql`
+      SELECT * FROM cart_sessions
+      WHERE completed = false
+        AND jsonb_array_length(items) > 0
+        AND (coalesce(sender_phone, '') <> '' OR coalesce(sender_email, '') <> '')
+        AND updated_at > now() - interval '14 days'
+      ORDER BY updated_at DESC
+    `;
+    return rows as CartSession[];
   });
 }

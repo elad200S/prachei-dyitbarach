@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createOrder, type OrderItem } from "@/lib/db";
+import { createOrder, markCartSessionCompleted, type OrderItem } from "@/lib/db";
 import { sendCustomerConfirmationEmail, sendOrderNotificationEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     items,
     deliveryCost,
     total,
+    cartSessionId,
   } = body ?? {};
 
   if (
@@ -71,6 +72,14 @@ export async function POST(request: Request) {
       await sendCustomerConfirmationEmail(order);
     } catch (emailError) {
       console.error("Failed to send customer confirmation email", emailError);
+    }
+
+    if (typeof cartSessionId === "string" && cartSessionId) {
+      try {
+        await markCartSessionCompleted(cartSessionId);
+      } catch (cartError) {
+        console.error("Failed to mark cart session completed", cartError);
+      }
     }
 
     return NextResponse.json({ id: order.id });

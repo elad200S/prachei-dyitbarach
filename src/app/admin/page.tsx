@@ -18,7 +18,12 @@ export default async function AdminOrdersPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 py-12">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="font-serif text-2xl sm:text-3xl text-ink">ניהול הזמנות</h1>
+        <div>
+          <h1 className="font-serif text-2xl sm:text-3xl text-ink">ניהול הזמנות</h1>
+          <Link href="/admin/carts" className="text-sm text-ink/60 hover:text-ink">
+            עגלות נטושות ←
+          </Link>
+        </div>
         <LogoutButton />
       </div>
 
