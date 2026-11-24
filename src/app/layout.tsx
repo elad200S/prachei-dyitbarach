@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Frank_Ruhl_Libre, Heebo } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
@@ -97,6 +99,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <CartDrawer />
           </WishlistProvider>
         </CartProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
