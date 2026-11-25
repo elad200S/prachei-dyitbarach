@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, type MouseEvent, type TouchEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, Pause, Play } from "lucide-react";
+import { useDeliveryStatus } from "@/lib/useDeliveryStatus";
+import { Truck, Pause, Play } from "lucide-react";
 
 const slides = [
   {
@@ -14,11 +15,12 @@ const slides = [
   {
     image: "/hero/rotator/every-occasion-flowers.webp",
     alt: "כל סיבה היא סיבה לפרחים - בוחרים זר, משמחים מישהו",
-    href: "/shop",
+    href: "/best-sellers",
   },
 ];
 
 export default function Hero() {
+  const status = useDeliveryStatus();
   const [index, setIndex] = useState(0);
   const [autoPaused, setAutoPaused] = useState(false);
   const [userPaused, setUserPaused] = useState(false);
@@ -147,8 +149,8 @@ export default function Hero() {
           href="/shop"
           className="mx-auto flex max-w-2xl items-center justify-center gap-2 w-full bg-accent text-white text-sm sm:text-base font-medium py-4 rounded-xl shadow-lg hover:brightness-110 transition-all"
         >
-          <CalendarDays size={18} />
-          בחרו תאריך וכתובת למשלוח
+          <Truck size={18} />
+          {status ? status.message : "בחרו זר ונשלח אליכם עד הבית"}
         </Link>
       </div>
     </section>

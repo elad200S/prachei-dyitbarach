@@ -11,6 +11,7 @@ import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import AccessibilityWidget from "@/components/layout/AccessibilityWidget";
 import CartDrawer from "@/components/cart/CartDrawer";
+import CartReminderBar from "@/components/cart/CartReminderBar";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import { SITE_URL, MAPS_URL, GOOGLE_REVIEW_URL } from "@/lib/contact";
 
@@ -97,6 +98,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <WhatsAppButton />
             <AccessibilityWidget />
             <CartDrawer />
+            <CartReminderBar />
           </WishlistProvider>
         </CartProvider>
         <Analytics />

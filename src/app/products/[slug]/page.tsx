@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProductBySlug } from "@/lib/db";
+import { getProductBySlug, getProducts } from "@/lib/db";
 import { SITE_URL } from "@/lib/contact";
 import ProductClient from "@/components/product/ProductClient";
+import RecentlyViewed from "@/components/RecentlyViewed";
+import RelatedProducts from "@/components/product/RelatedProducts";
 
 export const dynamic = "force-dynamic";
 
@@ -37,6 +39,8 @@ export default async function ProductPage({
 
   if (!product) notFound();
 
+  const allProducts = await getProducts();
+
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -59,6 +63,8 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
       <ProductClient product={product} />
+      <RelatedProducts current={product} products={allProducts} />
+      <RecentlyViewed products={allProducts} trackSlug={product.slug} />
     </>
   );
 }

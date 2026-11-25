@@ -5,9 +5,16 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { addOns as allAddOns } from "@/lib/data";
+import { useDeliveryStatus } from "@/lib/useDeliveryStatus";
 
 export default function CartDrawer() {
-  const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal } = useCart();
+  const { items, isOpen, closeCart, removeItem, updateQuantity, toggleAddOn, subtotal } = useCart();
+  const delivery = useDeliveryStatus();
+  const upsellTarget = items[items.length - 1];
+  const upsells = upsellTarget
+    ? allAddOns.filter((a) => !a.hasTextArea && !upsellTarget.addOns.some((x) => x.id === a.id))
+    : [];
 
   return (
     <AnimatePresence>
@@ -92,6 +99,29 @@ export default function CartDrawer() {
 
             {items.length > 0 && (
               <div className="border-t border-black/10 px-6 py-5 space-y-4">
+                {upsells.length > 0 && (
+                  <div>
+                    <p className="text-xs text-ink/60 mb-2">להוסיף למתנה?</p>
+                    <div className="flex flex-wrap gap-2">
+                      {upsells.map((a) => (
+                        <button
+                          key={a.id}
+                          onClick={() =>
+                            toggleAddOn(upsellTarget.id, { id: a.id, label: a.label, price: a.price })
+                          }
+                          className="text-xs rounded-full border border-accent/40 text-accent px-3 py-1.5 hover:bg-accent hover:text-white transition-colors"
+                        >
+                          + {a.label} · {a.price} ₪
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {delivery && (
+                  <p className="text-xs text-ink/70 bg-accent-soft/50 rounded-md px-3 py-2">
+                    {delivery.message}. עלות המשלוח תחושב לפי העיר בשלב הבא.
+                  </p>
+                )}
                 <div className="flex items-center justify-between text-ink">
                   <span className="font-medium">סכום ביניים</span>
                   <span className="font-medium">{subtotal} ₪</span>

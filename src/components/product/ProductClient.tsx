@@ -7,6 +7,7 @@ import type { Product, Size } from "@/lib/types";
 import { addOns as allAddOns } from "@/lib/data";
 import { useCart } from "@/context/CartContext";
 import { WHATSAPP_URL } from "@/lib/contact";
+import DeliveryStrip from "./DeliveryStrip";
 
 export default function ProductClient({ product }: { product: Product }) {
   const { addItem } = useCart();
@@ -65,8 +66,10 @@ export default function ProductClient({ product }: { product: Product }) {
             </div>
             <p className="text-ink/60 mt-3 leading-7 text-sm font-light">{product.longDescription}</p>
 
+            <DeliveryStrip />
+
             {/* Size selector */}
-            <div className="mt-10">
+            <div className="mt-8">
               <p className="text-[11px] tracked-xs uppercase text-ink/50 mb-3">בחרו גודל</p>
               <div className="grid grid-cols-3 gap-2">
                 {product.sizes.map((s) => (

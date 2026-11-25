@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 export interface CartItem {
   id: string;
@@ -24,11 +24,13 @@ interface CartContextValue {
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
+  toggleAddOn: (id: string, addOn: CartItem["addOns"][number]) => void;
   itemCount: number;
   subtotal: number;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
+const STORAGE_KEY = "prachei-dyitbarach-cart";
 
 function itemTotal(item: CartItem) {
   const addOnsTotal = item.addOns.reduce((sum, a) => sum + a.price, 0);
@@ -38,6 +40,30 @@ function itemTotal(item: CartItem) {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+
+  // Keep the cart across refreshes and return visits.
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) setItems(parsed);
+      }
+    } catch {
+      // ignore storage errors
+    }
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    } catch {
+      // ignore storage errors
+    }
+  }, [items, hydrated]);
 
   const addItem = (item: Omit<CartItem, "id">) => {
     const id = `${item.slug}-${item.size}-${Date.now()}`;
@@ -52,6 +78,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const updateQuantity = (id: string, quantity: number) => {
     setItems((prev) =>
       prev.map((i) => (i.id === id ? { ...i, quantity: Math.max(1, quantity) } : i)),
+    );
+  };
+
+  const toggleAddOn = (id: string, addOn: CartItem["addOns"][number]) => {
+    setItems((prev) =>
+      prev.map((i) => {
+        if (i.id !== id) return i;
+        const has = i.addOns.some((a) => a.id === addOn.id);
+        return {
+          ...i,
+          addOns: has ? i.addOns.filter((a) => a.id !== addOn.id) : [...i.addOns, addOn],
+        };
+      }),
     );
   };
 
@@ -78,6 +117,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     removeItem,
     updateQuantity,
     clearCart,
+    toggleAddOn,
     itemCount,
     subtotal,
   };

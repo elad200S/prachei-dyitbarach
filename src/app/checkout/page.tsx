@@ -203,9 +203,36 @@ export default function CheckoutPage() {
   return (
     <div className="relative">
       <CheckoutBackground />
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-12 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-10">
+      <nav aria-label="שלבי הזמנה" className="mx-auto max-w-5xl px-4 sm:px-6 pt-8">
+        <ol className="flex items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
+          {[
+            { label: "סל", href: "#", done: true },
+            { label: "פרטים", href: "#details", done: false },
+            { label: "משלוח", href: "#delivery", done: false },
+            { label: "תשלום", href: "#payment", done: false },
+          ].map((step, idx) => (
+            <li key={step.label} className="flex items-center gap-2 sm:gap-4">
+              <a
+                href={step.href}
+                className={`flex items-center gap-1.5 ${step.done ? "text-accent" : "text-ink/60 hover:text-accent"}`}
+              >
+                <span
+                  className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
+                    step.done ? "bg-accent text-white" : "border border-ink/30"
+                  }`}
+                >
+                  {step.done ? "✓" : idx + 1}
+                </span>
+                {step.label}
+              </a>
+              {idx < 3 && <span className="w-6 sm:w-10 h-px bg-ink/20" />}
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-10">
       <form onSubmit={handleSubmit} className="space-y-10">
-        <section>
+        <section id="details" className="scroll-mt-28">
           <h2 className="font-serif text-xl text-ink mb-4">פרטי השולח/ת</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
@@ -244,7 +271,7 @@ export default function CheckoutPage() {
           </div>
         </section>
 
-        <section>
+        <section id="delivery" className="scroll-mt-28">
           <h2 className="font-serif text-xl text-ink mb-4">כתובת למשלוח</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <select required value={city} onChange={(e) => setCity(e.target.value)} className="input sm:col-span-1">
@@ -289,7 +316,7 @@ export default function CheckoutPage() {
           </label>
         </section>
 
-        <section>
+        <section id="payment" className="scroll-mt-28">
           <h2 className="font-serif text-xl text-ink mb-4">אמצעי תשלום</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {paymentOptions.map((opt) => (
@@ -321,7 +348,7 @@ export default function CheckoutPage() {
       </form>
 
       {/* Order summary */}
-      <aside className="relative bg-white/70 backdrop-blur-sm rounded-xl border border-black/10 p-6 h-fit overflow-hidden">
+      <aside className="relative bg-white/70 backdrop-blur-sm rounded-xl border border-black/10 p-6 h-fit overflow-hidden md:sticky md:top-28">
         <Image
           src="/logo-icon.png"
           alt=""
